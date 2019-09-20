@@ -1,5 +1,6 @@
 plugins {
-    id 'war'  
+    id 'war'
+    id 'idea'
     id 'org.gretty' version '2.2.0' 
 }
 
