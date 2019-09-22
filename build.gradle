@@ -9,7 +9,10 @@ repositories {
 }
 
 dependencies {
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0' 
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile group: 'javax.servlet.jsp.jstl', name: 'jstl', version: '1.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.19'
 }
 
