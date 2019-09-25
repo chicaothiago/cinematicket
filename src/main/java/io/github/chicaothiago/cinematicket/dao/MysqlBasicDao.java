@@ -14,18 +14,11 @@ public class MysqlBasicDao extends MysqlConnectionDao {
     public DefaultBean bean = new DefaultBean();
 
     public ArrayList<HashMap<String, Object>> selectAll(ArrayList<String> fields) throws SQLException {
+        String sqlFields = fields.size() > 0 ? String.join(", ", fields) : "*";
         PreparedStatement preparedStatement = this.connection.prepareStatement(
-            "SELECT ? FROM ? WHERE deleted_at IS NULL"
+            "SELECT " + sqlFields + "  FROM " + this.table + " WHERE deleted_at is null"
         );
-
-        preparedStatement.setString(2, this.table);
-        if (fields.size() > 0) {
-            preparedStatement.setString(1, String.join(", ", fields));
-        } else {
-            preparedStatement.setString(1, "*");
-        }
-
-
+        System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 

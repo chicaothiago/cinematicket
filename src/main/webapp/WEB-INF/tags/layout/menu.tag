@@ -8,7 +8,7 @@
         <a href="<c:url value="/cinema" />">Cinema</a>
     </div>
     <div class="col menu">
-        <a href="#">Movies</a>
+        <a href="<c:url value="/movie" />">Movies</a>
     </div>
     <div class="col menu">
         <a href="#">Customer</a>
