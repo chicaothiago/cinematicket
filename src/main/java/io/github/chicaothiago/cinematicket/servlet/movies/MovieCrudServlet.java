@@ -6,6 +6,7 @@ import io.github.chicaothiago.cinematicket.dao.CinemaDao;
 import io.github.chicaothiago.cinematicket.dao.MovieDao;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +19,13 @@ import java.util.ArrayList;
 public class MovieCrudServlet extends HttpServlet {
     MovieDao movieDao = new MovieDao();
     CinemaDao cinemaDao = new CinemaDao();
+
     @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
         ArrayList<CinemaBean> cinemas = new ArrayList<>();
         try {
             cinemas = cinemaDao.selectAll();
+            req.setAttribute("cinemas", cinemas);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -31,18 +34,18 @@ public class MovieCrudServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/cinema");
         }
 
+        MovieBean movie = new MovieBean();
         if (req.getParameter("id") != null) {
             req.setAttribute("id", req.getParameter("id"));
 
-            MovieBean movie = new MovieBean();
             try {
                 movie = movieDao.getMovie(Integer.parseInt(req.getParameter("id")));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            req.setAttribute("movie", movie);
         }
+        req.setAttribute("movie", movie);
 
         req.getRequestDispatcher("/WEB-INF/views/movies/form.jsp").forward(req, resp);
     }
@@ -52,5 +55,11 @@ public class MovieCrudServlet extends HttpServlet {
         if (req.getParameter("delete_id") != null) {
             movieDao.deleteMovie(Integer.parseInt(req.getParameter("delete_id")));
         }
+
+        if (req.getParameterValues("cinemas[]") == null) {
+            req.getRequestDispatcher(req.getHeader("Referer")).forward(req, resp);
+        }
+
+        System.out.println(String.join(", ", req.getParameterValues("cinemas[]")));
     }
 }
