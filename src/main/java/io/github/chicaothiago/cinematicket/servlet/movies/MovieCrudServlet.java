@@ -53,13 +53,37 @@ public class MovieCrudServlet extends HttpServlet {
     @Override protected void doPost(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
         if (req.getParameter("delete_id") != null) {
-            movieDao.deleteMovie(Integer.parseInt(req.getParameter("delete_id")));
+            this.doDelete(req, resp);
+            return;
+        }
+
+        if (req.getParameter("id") != null) {
+            this.doPut(req, resp);
+            return;
         }
 
         if (req.getParameterValues("cinemas[]") == null) {
             req.getRequestDispatcher(req.getHeader("Referer")).forward(req, resp);
         }
 
-        System.out.println(String.join(", ", req.getParameterValues("cinemas[]")));
+        this.movieDao.insertMovie(req);
+
+        resp.sendRedirect(req.getContextPath() + "/movies");
+    }
+
+    @Override protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
+        try {
+            movieDao.update(req);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        resp.sendRedirect(req.getContextPath() + "/movies");
+    }
+
+    @Override protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
+        movieDao.deleteMovie(Integer.parseInt(req.getParameter("delete_id")));
+        resp.sendRedirect(req.getContextPath() + "/movies");
     }
 }

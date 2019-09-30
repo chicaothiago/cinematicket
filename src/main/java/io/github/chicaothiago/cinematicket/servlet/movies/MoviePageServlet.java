@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet(name = "MoviePage", urlPatterns = {"/movie", "/movie/"})
+@WebServlet(name = "MoviePage", urlPatterns = {"/movies", "/movie/"})
 public class MoviePageServlet extends HttpServlet {
     MovieDao movieDao = new MovieDao();
     @Override protected void service(HttpServletRequest req, HttpServletResponse resp)

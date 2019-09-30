@@ -16,11 +16,15 @@ public class MysqlBasicDao extends MysqlConnectionDao {
     public ArrayList<HashMap<String, Object>> selectAll(ArrayList<String> fields) throws SQLException {
         String sqlFields = fields.size() > 0 ? String.join(", ", fields) : "*";
         PreparedStatement preparedStatement = this.connection.prepareStatement(
-            "SELECT " + sqlFields + "  FROM " + this.table + " WHERE deleted_at is null"
+            "SELECT " + sqlFields + " FROM " + this.table + " WHERE deleted_at is null"
         );
-        System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
+        System.out.println(preparedStatement.toString());
+        System.out.println(resultSetMetaData.getColumnCount());
+        System.out.println(fields.size());
+        System.out.println(this.bean.countFields);
 
         Integer countFields = fields.size() > 0 ? fields.size() : this.bean.countFields;
 
@@ -28,6 +32,7 @@ public class MysqlBasicDao extends MysqlConnectionDao {
         while (resultSet.next()) {
             HashMap<String, Object> mapBean = new HashMap<>();
             for (int i = 0; i < countFields; i++) {
+                System.out.printf("%s - %s", resultSetMetaData.getColumnName(i), resultSet.getObject(i));
                 mapBean.put(resultSetMetaData.getColumnName(i), resultSet.getObject(i));
             }
             results.add(mapBean);

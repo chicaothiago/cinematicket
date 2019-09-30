@@ -5,3 +5,19 @@
     background-color: dimgray;
     color: #e7e0ff;
 }
+
+.footer-text {
+    text-decoration: none;
+}
+
+.footer-text a {
+    text-decoration: none;
+    color: white;
+}
+.footer-text a:hover {
+    text-decoration: underline;
+    color: #feffef;
+}
+.footer-text a:visited {
+    text-decoration: none;
+}

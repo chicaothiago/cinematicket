@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/panel-content.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/buttons.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/forms.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/css/header.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/css/show-cinema.css" />">
 </head>
 <body class="body-flex">
     <jsp:invoke fragment="menu"/>

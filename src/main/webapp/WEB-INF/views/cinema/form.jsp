@@ -10,9 +10,12 @@
             <div class="panel-content">
                 <form action="<c:url value="/cinema/crud" />"
                       method="post">
+                    <c:if test="${cinema.id != null}">
                     <input type="text"
                            hidden
+                           name="id"
                            value="${cinema.id}">
+                    </c:if>
                     <fieldset>
                         <div class="column">
                             <label for="form-cinema-name">Nome: </label>

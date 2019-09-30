@@ -10,11 +10,9 @@
     <jsp:body>
         <div class="row justify-center">
             <div class="row panel">
-                <div class="panel-header">
+                <div class="panel-content">
                     <div class="row justify-between items-center">
-                        <div>
-                            <h4>List of Movies</h4>
-                        </div>
+                        <div></div>
                         <div>
                             <a href="<c:url value="/movies/crud" />">
                                 <button class="btn btn-blue">
@@ -23,13 +21,12 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="panel-content">
-                    <table border
+                    <table class="table"
                            width="100%">
                         <thead>
                         <th>Movie</th>
                         <th>Image</th>
+                        <th>Cinemas</th>
                         <th class="table-action"></th>
                         </thead>
                         <tbody>
@@ -38,30 +35,37 @@
                                        items="${movies}">
                                 <tr>
                                     <td>${movie.name}</td>
-                                    <td>
+                                    <td class="table-img">
                                         <a href="${movie.url_image}"
                                            target="_blank">
                                             <img src="${movie.url_image}"
-                                                 alt="">
+                                                 alt="" style="max-height: 5cm;">
                                         </a>
                                     </td>
+
                                     <td>
-                                        <a href="<c:url value="/movies/crud?id=${cinema.id}"/>">
+                                        <c:forEach items="${movie.cinemas.values()}" var="cinema">
+                                            <p> ${cinema.name}</p>
+                                        </c:forEach>
+                                    </td>
+
+                                    <td class="table-action">
+                                        <a href="<c:url value="/movies/crud?id=${movie.id}"/>">
                                             <button class="btn btn-small btn-orange">
-                                                Editar
+                                                Edit
                                             </button>
                                         </a>
-                                        <form action="<c:url value="/movies/crud"/>" method="DELETE">
-                                            <input type="hidden" name="delete_id" value="${cinema.id}">
+                                        <form action="<c:url value="/movies/crud"/>" method="post">
+                                            <input type="hidden" name="delete_id" value="${movie.id}">
                                             <button type="submit" class="btn btn-small btn-red">
-                                                Remover
+                                                Remove
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </c:if>
-                        <c:if test="${fn:length(cinemas) == 0}">
+                        <c:if test="${fn:length(movies) == 0}">
                             <tr>
                                 <td colspan="4">Cinemas is empty</td>
                             </tr>

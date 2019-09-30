@@ -1,0 +1,25 @@
+.menu-header {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #777;
+}
+
+.menu-header:hover {
+    text-decoration: underline;
+}
+
+.menu-header:visited {
+    color: #777;
+}
+
+.menu-current-header {
+    text-decoration: underline;
+    font-weight: bold;
+    color: black !important;
+}
+
+.menu-header-box {
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

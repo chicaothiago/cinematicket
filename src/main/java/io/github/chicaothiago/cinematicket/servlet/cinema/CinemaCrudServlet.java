@@ -23,13 +23,8 @@ public class CinemaCrudServlet extends HttpServlet {
     protected void doGet(
         HttpServletRequest req, HttpServletResponse resp
     ) throws ServletException, IOException {
-        if (req.getParameter("delete_id") != null ) {
-            try {
-                this.cinemaDao.delete(req);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            resp.sendRedirect(req.getContextPath() + "/cinema");
+        if (req.getParameter("delete_id") != null) {
+            this.doDelete(req, resp);
         }
 
         String id = req.getParameter("id");
@@ -47,41 +42,52 @@ public class CinemaCrudServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("id") != null) {
-            try {
-                this.addressDao.updateAddress(req);
-                this.cinemaDao.updateCinema(req);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            AddressBean addressBean = new AddressBean();
-            addressBean.street = req.getParameter("street");
-            addressBean.number = req.getParameter("number");
-            addressBean.zipcode = req.getParameter("zipcode");
-            addressBean.city = req.getParameter("city");
-            addressBean.state = req.getParameter("state");
-            addressBean.country = req.getParameter("country");
-            try {
-                addressBean.id = this.addressDao.insertBean(addressBean, true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-            CinemaBean cinemaBean = new CinemaBean();
-            cinemaBean.name = req.getParameter("name");
-            cinemaBean.address = addressBean;
-            try {
-                cinemaDao.insertBean(cinemaBean);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
+            this.doPut(req, resp);
         }
-        resp.sendRedirect(req.getContextPath() + "/cinema");
+
+        AddressBean addressBean = new AddressBean();
+        addressBean.street = req.getParameter("street");
+        addressBean.number = req.getParameter("number");
+        addressBean.zipcode = req.getParameter("zipcode");
+        addressBean.city = req.getParameter("city");
+        addressBean.state = req.getParameter("state");
+        addressBean.country = req.getParameter("country");
+        try {
+            addressBean.id = this.addressDao.insertBean(addressBean, true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        CinemaBean cinemaBean = new CinemaBean();
+        cinemaBean.name = req.getParameter("name");
+        cinemaBean.address = addressBean;
+        try {
+            cinemaDao.insertBean(cinemaBean);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        resp.sendRedirect(req.getContextPath() + "/cinemas");
     }
 
     @Override protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
-        System.out.println("aff");
+        try {
+            this.cinemaDao.delete(req);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        resp.sendRedirect(req.getContextPath() + "/cinemas");
+    }
+
+    @Override protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
+        try {
+            this.addressDao.updateAddress(req);
+            this.cinemaDao.updateCinema(req);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        resp.sendRedirect(req.getContextPath() + "/cinemas");
     }
 }

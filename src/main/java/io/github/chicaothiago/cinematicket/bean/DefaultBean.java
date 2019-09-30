@@ -7,6 +7,7 @@ public class DefaultBean {
     public Calendar updated_at;
     public Calendar deleted_at;
     public Integer countFields = 3;
+    public String table = "";
 
     public Calendar getCreated_at() {
         return created_at;

@@ -10,10 +10,9 @@
     <jsp:body>
         <div class="row justify-center">
             <div class="row panel">
-                <div class="panel-header">
+                <div class="panel-content">
                     <div class="row justify-between items-center">
                         <div>
-                            <h4>List of Cinemas</h4>
                         </div>
                         <div>
                             <a href="<c:url value="/cinema/crud" />">
@@ -23,9 +22,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="panel-content">
-                    <table border
+                    <table class="table"
                            width="100%">
                         <thead>
                         <th>Cinema</th>
@@ -39,16 +36,16 @@
                                 <tr>
                                     <td>${cinema.name}</td>
                                     <td>${cinema.address.getFullAddress()}</td>
-                                    <td>
+                                    <td class="table-action">
                                         <a href="<c:url value="/cinema/crud?id=${cinema.id}"/>">
                                             <button class="btn btn-small btn-orange">
-                                                Editar
+                                                Edit
                                             </button>
                                         </a>
                                         <form action="<c:url value="/cinema/crud"/>" method="DELETE">
                                             <input type="hidden" name="delete_id" value="${cinema.id}">
                                             <button type="submit" class="btn btn-small btn-red">
-                                                Remover
+                                                Remove
                                             </button>
                                         </form>
                                     </td>

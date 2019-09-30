@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "CinemaPageServlet", urlPatterns = {"/cinema", "/cinema/"})
+@WebServlet(name = "CinemaPageServlet", urlPatterns = {"/cinemas", "/cinemas/"})
 public class CinemaPageServlet extends HttpServlet {
     CinemaDao cinemaDao = new CinemaDao();
 
